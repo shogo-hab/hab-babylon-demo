@@ -26,6 +26,14 @@ export default function BabylonComponent(props) {
         const light = new BABYLON.HemisphericLight("ligth", new BABYLON.Vector3(0, 1, 0), scene);
         light.intensity = 0.7;
 
+
+        // スカイライト置いてみる
+        var hdrTexture = BABYLON.CubeTexture.CreateFromPrefilteredData("textures/environment.dds", scene);
+        hdrTexture.gammaSpace = false;
+        scene.environmentTexture = hdrTexture;
+
+        scene.createDefaultSkybox(hdrTexture, true, 100);
+
         // 試しに球のメッシュを置いてみる
         const sphere = BABYLON.MeshBuilder.CreateSphere(
             "sphere",
