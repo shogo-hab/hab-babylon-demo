@@ -1,5 +1,6 @@
+// 3D Context表示用のCanvas
+
 import * as BABYLON from 'babylonjs';
-// import Reactを追加
 import React from 'react';
 
 
@@ -60,6 +61,7 @@ export default class Scene extends React.Component {
 
     return (
       <canvas
+        style={{width: "100%"}}
         {...opts}
         ref={this.onCanvasLoaded}
       />

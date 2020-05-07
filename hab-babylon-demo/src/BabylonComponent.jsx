@@ -1,3 +1,5 @@
+// CanvasとBabylonをセットアップするコンポーネント
+
 import * as React from 'react';
 import * as BABYLON from 'babylonjs';
 // SceneEventArgsのimportを追加
@@ -7,11 +9,11 @@ export default function BabylonComponent(props) {
     
     // canvasがマウントされた後に呼ばれる
     // Babylon.jsのSceneに3D Objectをセットアップする
-    const onSceneMount = (e) => {
+    const onSceneMount = async (e) => {
         const { canvas, scene, engine } = e;
 
         // カメラをシーンに座標を指定して設置
-        var camera = new BABYLON.FreeCamera("camera", new BABYLON.Vector3(0, 5, -10), scene);
+        const camera = new BABYLON.FreeCamera("camera", new BABYLON.Vector3(0, 5, -10), scene);
 
         // シーンの原点にカメラを向ける
         camera.setTarget(BABYLON.Vector3.Zero());
@@ -21,8 +23,16 @@ export default function BabylonComponent(props) {
         camera.attachControl(canvas, true);
 
         // シーンにライトを追加。光量を設定
-        var light = new BABYLON.HemisphericLight("ligth", new BABYLON.Vector3(0, 1, 0), scene);
+        const light = new BABYLON.HemisphericLight("ligth", new BABYLON.Vector3(0, 1, 0), scene);
         light.intensity = 0.7;
+
+        // 試しに球のメッシュを置いてみる
+        const sphere = BABYLON.MeshBuilder.CreateSphere(
+            "sphere",
+            { diameter: 2 },
+            scene
+          );
+        
 
         // Babylon.jsのRender Loopに描画処理を登録する
         // 毎フレーム描画処理が実行されるようになる
@@ -34,7 +44,7 @@ export default function BabylonComponent(props) {
     }
 
         return (
-            <div>
+            <div style={{width: "100%"}}>
                 <BabylonCanvas onSceneMount={onSceneMount} />
             </div>
         )

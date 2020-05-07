@@ -1,3 +1,5 @@
+// Reactのアプリケーションのトップレベルコンポーネント
+
 import React from 'react';
 import BabylonComponent from './BabylonComponent';
 import '@csstools/normalize.css';
