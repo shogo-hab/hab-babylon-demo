@@ -1,14 +1,17 @@
 // CanvasとBabylonをセットアップするコンポーネント
-import * as React from "react";
-import * as BABYLON from '@babylonjs/core'
+import React, { useState } from "react";
+import * as BABYLON from "@babylonjs/core";
 
 // glTFをロードするためにローダを追加
 import "@babylonjs/loaders";
 
 import BabylonCanvas from "./BabylonCanvas"; // import the component above linking to file we just created.
+import { SetStateAction } from "babylonjs";
 
 export default function BabylonComponent(props) {
-
+  // hookでscene更新する
+  const [scene, setScene] = useState();
+  const [toggle, setToggle] = useState(false);
 
   // canvasがマウントされた後に呼ばれる
   // Babylon.jsのSceneに3D Objectをセットアップする
@@ -16,13 +19,10 @@ export default function BabylonComponent(props) {
     const { canvas, scene, engine } = e;
 
     // コンソールデバッグ用
-    console.log(canvas,scene,engine);
+    console.log(canvas, scene, engine);
 
     // gltfのモデルをロード
-    await BABYLON.SceneLoader.AppendAsync(
-        "/",
-        "gltf/FWH_with_cp.glb",
-        scene)
+    await BABYLON.SceneLoader.AppendAsync("/", "gltf/FWH_with_cp.glb", scene);
 
     // カメラをシーンに座標を指定して設置
     const camera = new BABYLON.FreeCamera(
@@ -47,7 +47,7 @@ export default function BabylonComponent(props) {
 
     // 背景画像設定
     var hdrTexture = BABYLON.CubeTexture.CreateFromPrefilteredData(
-      "textures/environment.dds",
+      "/textures/environment.dds",
       scene
     );
     hdrTexture.gammaSpace = false;
@@ -55,7 +55,8 @@ export default function BabylonComponent(props) {
 
     scene.createDefaultSkybox(hdrTexture, true, 100);
 
-
+    // stateを更新
+    setScene(scene);
 
     // Babylon.jsのRender Loopに描画処理を登録する
     // 毎フレーム描画処理が実行されるようになる
@@ -69,6 +70,31 @@ export default function BabylonComponent(props) {
   return (
     <div style={{ width: "100%" }}>
       <BabylonCanvas onSceneMount={onSceneMount} />
+      {scene ? (
+        <button
+          onClick={() => {
+            click(scene, toggle, setToggle);
+          }}
+        >
+          {toggle ? "表示" : "非表示"}
+        </button>
+      ) : null}
     </div>
   );
+}
+
+function click(scene, toggle, setToggle) {
+  scene.meshes.forEach((e) => {
+    if (toggle) {
+      e.isVisible = true;
+      return;
+    }
+
+    if (e.metadata && e.metadata.gltf.extras) {
+      e.isVisible = true;
+      return;
+    }
+    e.isVisible = false;
+  });
+  setToggle(!toggle);
 }
