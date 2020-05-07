@@ -42,24 +42,30 @@ export default function BabylonComponent(props) {
 
     scene.createDefaultSkybox(hdrTexture, true, 100);
 
-    // 横に10個くらい並べる
-    const array = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+    // x,y,zに10個くらい並べる
+    const range = 10;
+    for (var i = 0; i < range ; i++ ){
+        for (var j = 0; j < range ; j++ ){
+            for (var k = 0; k < range ; k++ ){
+                const sphere = BABYLON.MeshBuilder.CreateSphere(
+                    "sphere",
+                    { diameter: 2 },
+                    scene
+                  );
+                  sphere.position.x = i * 4;
+                  sphere.position.y = j * 4;
+                  sphere.position.z = k * 4;
 
-    array.forEach((idx) => {
-      const sphere = BABYLON.MeshBuilder.CreateSphere(
-        "sphere",
-        { diameter: 2 },
-        scene
-      );
-      sphere.position.x = idx * 4;
-      // PBRマテリアルを球に設定してみる
-      const metalicPbr = new BABYLON.PBRMetallicRoughnessMaterial("pbr", scene);
-      metalicPbr.baseColor = new BABYLON.Color3(1.0, 0.766, 0.336 * idx);
-      metalicPbr.metallic = 1.0;
-      metalicPbr.roughness = 0.0;
-
-      sphere.material = metalicPbr;
-    });
+                  // PBRマテリアルを球に設定してみる
+                  const metalicPbr = new BABYLON.PBRMetallicRoughnessMaterial("pbr", scene);
+                  metalicPbr.baseColor = new BABYLON.Color3(1.0,  0.766 * j, 0.336 * k);
+                  metalicPbr.metallic = 1.0;
+                  metalicPbr.roughness = 0.0;
+            
+                  sphere.material = metalicPbr;
+            }
+        }
+    }
 
     // Babylon.jsのRender Loopに描画処理を登録する
     // 毎フレーム描画処理が実行されるようになる
