@@ -1,15 +1,28 @@
 // CanvasとBabylonをセットアップするコンポーネント
-
 import * as React from "react";
-import * as BABYLON from "babylonjs";
-// SceneEventArgsのimportを追加
+import * as BABYLON from '@babylonjs/core'
+
+// glTFをロードするためにローダを追加
+import "@babylonjs/loaders";
+
 import BabylonCanvas from "./BabylonCanvas"; // import the component above linking to file we just created.
 
 export default function BabylonComponent(props) {
+
+
   // canvasがマウントされた後に呼ばれる
   // Babylon.jsのSceneに3D Objectをセットアップする
   const onSceneMount = async (e) => {
     const { canvas, scene, engine } = e;
+
+    // コンソールデバッグ用
+    console.log(canvas,scene,engine);
+
+    // gltfのモデルをロード
+    await BABYLON.SceneLoader.AppendAsync(
+        "/",
+        "gltf/FWH_with_cp.glb",
+        scene)
 
     // カメラをシーンに座標を指定して設置
     const camera = new BABYLON.FreeCamera(
@@ -42,30 +55,7 @@ export default function BabylonComponent(props) {
 
     scene.createDefaultSkybox(hdrTexture, true, 100);
 
-    // x,y,zに10個くらい並べる
-    const range = 10;
-    for (var i = 0; i < range ; i++ ){
-        for (var j = 0; j < range ; j++ ){
-            for (var k = 0; k < range ; k++ ){
-                const sphere = BABYLON.MeshBuilder.CreateSphere(
-                    "sphere",
-                    { diameter: 2 },
-                    scene
-                  );
-                  sphere.position.x = i * 4;
-                  sphere.position.y = j * 4;
-                  sphere.position.z = k * 4;
 
-                  // PBRマテリアルを球に設定してみる
-                  const metalicPbr = new BABYLON.PBRMetallicRoughnessMaterial("pbr", scene);
-                  metalicPbr.baseColor = new BABYLON.Color3(1.0,  0.766 * j, 0.336 * k);
-                  metalicPbr.metallic = 1.0;
-                  metalicPbr.roughness = 0.0;
-            
-                  sphere.material = metalicPbr;
-            }
-        }
-    }
 
     // Babylon.jsのRender Loopに描画処理を登録する
     // 毎フレーム描画処理が実行されるようになる
