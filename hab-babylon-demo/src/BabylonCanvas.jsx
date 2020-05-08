@@ -1,6 +1,5 @@
 // 3D Context表示用のCanvas
-
-import * as BABYLON from 'babylonjs';
+import * as BABYLON from "@babylonjs/core";
 import React from 'react';
 
 
@@ -50,7 +49,7 @@ export default class Scene extends React.Component {
   render () {
     // 'rest' can contain additional properties that you can flow through to canvas:
     // (id, className, etc.)
-    let { width, height, ...rest } = this.props;
+    let { width, height } = this.props;
 
     let opts = {};
 

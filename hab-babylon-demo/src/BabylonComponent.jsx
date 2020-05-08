@@ -5,8 +5,7 @@ import * as BABYLON from "@babylonjs/core";
 // glTFをロードするためにローダを追加
 import "@babylonjs/loaders";
 
-import BabylonCanvas from "./BabylonCanvas"; // import the component above linking to file we just created.
-import { SetStateAction } from "babylonjs";
+import BabylonCanvas from "./BabylonCanvas";
 
 export default function BabylonComponent(props) {
   // hookでscene更新する
