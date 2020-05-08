@@ -1,10 +1,8 @@
+import React from "react";
+import * as BABYLON from "@babylonjs/core";
+import BabylonCanvas　from './BabylonCanvas';
+
 // CanvasとBabylonをセットアップするコンポーネント
-
-import * as React from "react";
-import * as BABYLON from "babylonjs";
-// SceneEventArgsのimportを追加
-import BabylonCanvas from "./BabylonCanvas"; // import the component above linking to file we just created.
-
 export default function BabylonComponent(props) {
   // canvasがマウントされた後に呼ばれる
   // Babylon.jsのSceneに3D Objectをセットアップする
