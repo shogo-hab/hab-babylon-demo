@@ -6,7 +6,6 @@ import * as BABYLON from "@babylonjs/core";
 import "@babylonjs/loaders";
 
 import BabylonCanvas from "./BabylonCanvas"; // import the component above linking to file we just created.
-import { SetStateAction } from "babylonjs";
 
 export default function BabylonComponent(props) {
   // hookでscene更新する
