@@ -1,14 +1,13 @@
-// CanvasとBabylonをセットアップするコンポーネント
-import * as React from "react";
-import * as BABYLON from '@babylonjs/core'
+import React from "react";
+import * as BABYLON from "@babylonjs/core";
+import BabylonCanvas　from './BabylonCanvas';
 
 // glTFをロードするためにローダを追加
 import "@babylonjs/loaders";
 
-import BabylonCanvas from "./BabylonCanvas"; // import the component above linking to file we just created.
 
+// CanvasとBabylonをセットアップするコンポーネント
 export default function BabylonComponent(props) {
-
 
   // canvasがマウントされた後に呼ばれる
   // Babylon.jsのSceneに3D Objectをセットアップする
