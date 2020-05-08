@@ -1,6 +1,6 @@
 // 3D Context表示用のCanvas
 
-import * as BABYLON from 'babylonjs';
+import * as BABYLON from "@babylonjs/core";
 import React from 'react';
 
 
